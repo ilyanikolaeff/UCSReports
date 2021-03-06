@@ -1,0 +1,28 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:UCSReports"
+                    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" 
+                    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors">
+    <Style x:Key="centerContentAligment" TargetType="{x:Type dxg:GridColumn}">
+        <Setter Property="EditSettings">
+            <Setter.Value>
+                <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="TableViewRowStyle" TargetType="{x:Type dxg:RowControl}">
+        <Style.Triggers>
+            <Trigger Property="SelectionState" Value="Focused">
+                <Setter Property="Background" Value="White" />
+            </Trigger>
+        </Style.Triggers>
+        <Setter Property="Background" Value="{Binding Row.CodeOfStatus, Converter={StaticResource statusCodeToBrushConverter}}"/>
+    </Style>
+
+    <Style x:Key="TableViewOfMasks" TargetType="{x:Type dxg:RowControl}">
+        <Setter Property="Background" Value="{Binding Row.IsTorMask, Converter={StaticResource isTorMaskToBrushConverter}}"/>
+        <Setter Property="Foreground" Value="Black" />
+    </Style>
+
+</ResourceDictionary>
