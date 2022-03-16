@@ -1,0 +1,52 @@
+﻿<UserControl x:Class="UCSReports.ProtectionsAlarmsUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:UCSReports" 
+             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             Loaded="UserControl_Loaded">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition MinHeight="400"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Vertical" Grid.Row="0" Margin="5">
+            <TextBlock FontSize="16" FontWeight="Bold" Text="{Binding ReportName}" Margin="1"/>
+            <TextBlock FontSize="16" Text="{Binding TZName}" Margin="1"/>
+            <TextBlock FontSize="16" Text="{Binding StartTime, Converter={StaticResource dateTimeToStringConverter}, StringFormat='Время начала: {0}'}" Margin="1"/>
+            <TextBlock FontSize="16" Text="{Binding EndTime, Converter={StaticResource dateTimeToStringConverter}, StringFormat='Время окончания: {0}'}" Margin="1"/>
+            <Button Content="Сохранить отчет" Command="{Binding SaveReportCommand}" Margin="1"/>
+        </StackPanel>
+        <dxg:GridControl x:Name="ReportGridControl"
+                        ItemsSource="{Binding ProtectionsList}"
+                        Grid.Row="1"
+                        VerticalAlignment="Stretch"
+                        Margin="5">
+            <dxg:GridControl.View>
+                <dxg:TableView x:Name="TableView"
+                               ShowGroupPanel="False"
+                               AllowEditing="False"
+                               AllowSorting="True"
+                               AllowColumnFiltering="True"
+                               AllowHorizontalScrollingVirtualization="True"
+                               AllowBestFit="True"
+                               NavigationStyle="Row"
+                               ShowTotalSummary="True">
+                </dxg:TableView>
+            </dxg:GridControl.View>
+            <dxg:GridControl.Resources>
+            </dxg:GridControl.Resources>
+            <dxg:GridControl.Columns>
+                <dxg:GridColumn Header="Тег" Binding="{Binding Tag}" />
+                <dxg:GridColumn Header="Название защиты" Binding="{Binding Name}" />
+                <dxg:GridColumn Header="Время срабатывания" Binding="{Binding ActivationTime, Converter={StaticResource dateTimeToStringConverter}}" Style="{StaticResource centerContentAligment}"/>
+                <dxg:GridColumn Header="Время снятия" Binding="{Binding DeactivationTime, Converter={StaticResource dateTimeToStringConverter}}" Style="{StaticResource centerContentAligment}"/>
+                <dxg:GridColumn Header="Длительность" Binding="{Binding Duration, Converter={StaticResource timeSpanConverter}}" Style="{StaticResource centerContentAligment}"/>
+                <dxg:GridColumn Header="Длительность (сек)" Binding="{Binding DurationInSeconds}" Style="{StaticResource centerContentAligment}"/>
+            </dxg:GridControl.Columns>
+        </dxg:GridControl>
+    </Grid>
+</UserControl>

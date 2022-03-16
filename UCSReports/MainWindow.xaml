@@ -1,0 +1,88 @@
+﻿<dx:ThemedWindow  
+        x:Class="UCSReports.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UCSReports" 
+        xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" 
+        xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" 
+        mc:Ignorable="d"
+        Title="Отчеты САУ" SizeToContent="WidthAndHeight"
+        WindowStartupLocation="CenterScreen"
+        UseLayoutRounding="True"
+        ResizeMode="NoResize"
+        Closed="ThemedWindow_Closed">
+    <Window.DataContext>
+        <local:MainWindowViewModel/>
+    </Window.DataContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Vertical" Grid.Row="0">
+            <GroupBox Header="Технологический участок" Margin="2">
+                <dxe:ComboBoxEdit Text="Выберите ТУ..."
+                    Margin="1"
+                    IsTextEditable="False" 
+                    MinWidth="200"
+                    ItemsSource="{Binding TZNames}" 
+                    SelectedItem="{Binding TZName}"/>
+            </GroupBox>
+            <GroupBox Header="Интервал времени" Margin="2">
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal" Margin="2">
+                        <TextBlock Text="Начало:" Margin="2"/>
+                        <dxe:DateEdit 
+                            x:Name="DateTimeStart_Picker" 
+                            Mask="G" 
+                            MaskUseAsDisplayFormat="True"
+                            EditValue="{Binding PickedStartTime}">
+                            <dxe:DateEdit.StyleSettings>
+                                <dxe:DateEditNavigatorWithTimePickerStyleSettings/>
+                            </dxe:DateEdit.StyleSettings>
+                        </dxe:DateEdit>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="2">
+                        <TextBlock Text="Конец:" Margin="2"/>
+                        <dxe:DateEdit 
+                            x:Name="DateTimeEnd_Picker" 
+                            Mask="G" 
+                            MaskUseAsDisplayFormat="True"
+                            EditValue="{Binding PickedEndTime}">
+                            <dxe:DateEdit.StyleSettings>
+                                <dxe:DateEditNavigatorWithTimePickerStyleSettings/>
+                            </dxe:DateEdit.StyleSettings>
+                        </dxe:DateEdit>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+        </StackPanel>
+
+        <StackPanel Orientation="Vertical" Margin="5" Grid.Row="1">
+            <GroupBox Header="Отчеты">
+                <StackPanel Orientation="Vertical">
+                    <Button Content="Алгоритмы" Margin="5" Command="{Binding OpenAlgsReportsCommand}"></Button>
+                    <Button Content="Защиты" Margin="5" Command="{Binding OpenProtsReportsCommand}" Visibility="Collapsed"></Button>
+                    <Button Content="Маскирование" Margin="5" Command="{Binding OpenMasksReportsCommand}" Visibility="Collapsed"></Button>
+                </StackPanel>
+            </GroupBox>
+            <Button Margin="5" Command="{Binding OpenSettingsCommand}">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="{dx:DXImage 'Images/Setup/Properties_16x16.png'}" Margin="1"></Image>
+                        <TextBlock Text="Настройки приложения" Margin="1"></TextBlock>
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Margin="5" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Text="{Binding ConnectionString}" Margin="5" Background="{Binding ConnectionStatus, Converter={StaticResource connStatusToBrushConverter}}" FontWeight="Bold"/>
+        </StackPanel>
+    </Grid>
+</dx:ThemedWindow>

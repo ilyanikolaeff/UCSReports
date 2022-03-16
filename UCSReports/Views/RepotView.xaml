@@ -1,0 +1,26 @@
+﻿<dx:ThemedWindow  
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" 
+    x:Class="UCSReports.ReportView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:UCSReports"
+    mc:Ignorable="d"
+    Title="Просмотр отчета" Height="600" Width="800" SizeToContent="Width"  WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type local:EmergencyAlgorithmViewModel}">
+            <local:EmergencyAlgorithmUserControl/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type local:RegularAlgorithmViewModel}">
+            <local:RegularAlgorithmUserControl/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type local:ListOfAlgorithmsViewModel}">
+            <local:ListOfAlgorithmsUserControl/>
+        </DataTemplate>
+    </Window.Resources>
+
+    <ContentPresenter Content="{Binding CurrentVM}"/>
+
+</dx:ThemedWindow>
